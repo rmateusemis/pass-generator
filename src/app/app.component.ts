@@ -14,7 +14,30 @@ export class AppComponent {
   password = '';
 
   onButtonClick(): void {
-    this.password = 'My password';
+    const numbers = '1234567890';
+    const letters = 'abcdefghijklmnopqrstuvwyz';
+    const symbols = '!@#$%^&*()';
+
+    let validChars = '';
+
+    if (this.includeLetters) {
+      validChars += letters;
+    }
+    if (this.includeNumbers) {
+      validChars += numbers;
+    }
+    if (this.includeSymbols) {
+      validChars += symbols;
+    }
+
+    let generatedPassword = '';
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.length; i++) {
+      const index = Math.floor(Math.random() * validChars.length);
+      generatedPassword += validChars[index];
+    }
+    console.log(generatedPassword);
+    this.password = generatedPassword;
   }
 
   onChangeUseLetters(): void {
@@ -30,6 +53,8 @@ export class AppComponent {
   }
 
   onChangeLength(value: string): void {
-    console.log(value);
+    // tslint:disable-next-line:radix
+    const parsedValue = parseInt(value);
+    this.length = parsedValue;
   }
 }
